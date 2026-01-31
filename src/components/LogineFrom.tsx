@@ -15,15 +15,16 @@ import {
 } from "@/components/ui/card";
 import {
   Field,
+  FieldDescription,
   FieldError,
   FieldGroup,
   FieldLabel,
 } from "@/components/ui/field";
 
 import { Input } from "./ui/input";
-import { authService } from "@/service/auth.service";
-import { logine } from "@/actionServer/auth.action.server";
+
 import { authClient } from "@/lib/auth-clint";
+import Link from "next/link";
 
 const formSchema = z.object({
   email: z.email(),
@@ -43,7 +44,7 @@ export default function LogineForm() {
       const lodingId = toast.loading("Logine user...");
 
       try {
-        console.log(value);
+      
         const result = await authClient.signIn.email({
           email: value.email,
           password: value.password,
@@ -137,6 +138,10 @@ export default function LogineForm() {
           </Button>
         </Field>
       </CardFooter>
+      <FieldDescription className="text-center">
+        Don&apos;t have an account? <Link href="/register
+        ">Sign up</Link>
+      </FieldDescription>
     </Card>
   );
 }

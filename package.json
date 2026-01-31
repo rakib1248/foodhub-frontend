@@ -22,6 +22,7 @@
     "@tanstack/zod-form-adapter": "^0.42.1",
     "better-auth": "^1.4.18",
     "class-variance-authority": "^0.7.1",
+    "cloudinary": "^2.9.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.563.0",
     "next": "16.1.6",

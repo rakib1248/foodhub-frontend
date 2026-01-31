@@ -32,6 +32,9 @@ import {
 
 import { Roles as userRole } from "@/constants/roles";
 import { Input } from "./ui/input";
+import Link from "next/link";
+import { authClient } from "@/lib/auth-clint";
+import { uploadImage } from "@/lib/claudinary";
 
 const Roles = [
   { label: "Customer", value: userRole.user },
@@ -51,6 +54,7 @@ const formSchema = z.object({
       message: "Auto-detection is not allowed. Please select a specific Role.",
     }),
   image: z.any(),
+  pablicID: z.any(),
 });
 
 export default function RegistationForm() {
@@ -60,6 +64,7 @@ export default function RegistationForm() {
       email: "",
       password: "",
       image: null as File | null,
+      pablicID: null,
       role: "",
     },
     validators: {
@@ -70,6 +75,25 @@ export default function RegistationForm() {
       console.log(value);
 
       try {
+  
+
+        const result = await authClient.signUp.email({
+          name: value.name,
+          email: value.email,
+          password: value.password,
+          role: value.role,
+       
+        });
+        console.log(result);
+        if (!result.data) {
+          toast.error(
+            result.error.message
+              ? result.error.message
+              : "someting went Wron Please Try Again",
+            { id: lodingId },
+          );
+          return;
+        }
         toast.success("Account Create Successfull", { id: lodingId });
       } catch (erro) {
         toast.error("someting went Wron Please Try Again", {
@@ -249,6 +273,9 @@ export default function RegistationForm() {
           </Button>
         </Field>
       </CardFooter>
+      <FieldDescription className="px-6 text-center">
+        Already have an account? <Link href="/logine">Sign in</Link>
+      </FieldDescription>
     </Card>
   );
 }
