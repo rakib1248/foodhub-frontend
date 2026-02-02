@@ -25,13 +25,18 @@ import { Input } from "./ui/input";
 
 import { authClient } from "@/lib/auth-clint";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+
+
 
 const formSchema = z.object({
   email: z.email(),
   password: z.string().min(8, "minimum length is 8"),
 });
 
-export default function LogineForm() {
+
+export default  function LogineForm() {
+const router = useRouter();
   const form = useForm({
     defaultValues: {
       email: "",
@@ -44,17 +49,19 @@ export default function LogineForm() {
       const lodingId = toast.loading("Logine user...");
 
       try {
-      
+       
         const result = await authClient.signIn.email({
           email: value.email,
           password: value.password,
         });
-        console.log(result);
+
         if (!result.data) {
           toast.error("Invalid Email Or Password", { id: lodingId });
           return;
         }
+
         toast.success("Account Logine Successfull", { id: lodingId });
+        router.push("/dashboard");
       } catch (erro) {
         toast.error("someting went Wron Please Try Again", {
           id: lodingId,
@@ -139,8 +146,12 @@ export default function LogineForm() {
         </Field>
       </CardFooter>
       <FieldDescription className="text-center">
-        Don&apos;t have an account? <Link href="/register
-        ">Sign up</Link>
+        Don&apos;t have an account?{" "}
+        <Link
+          href="/register
+        ">
+          Sign up
+        </Link>
       </FieldDescription>
     </Card>
   );

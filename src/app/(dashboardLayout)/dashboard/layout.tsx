@@ -13,15 +13,26 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { Roles } from "@/constants/roles";
+import { authService } from "@/service/auth.service";
 
-export default function LayoutPage({
+export default async function LayoutPage({
   children,
+  admin,
+  customer,
+  provider,
 }: {
   children: React.ReactNode;
+  admin: React.ReactNode;
+  customer: React.ReactNode;
+  provider: React.ReactNode;
 }) {
+  const data = await authService.getSession();
+  const role = data?.data.user?.role;
+
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar role={role} />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2 border-b">
           <div className="flex items-center gap-2 px-3">
@@ -50,7 +61,7 @@ export default function LayoutPage({
           </div>
           <div className="bg-muted/50 min-h-[100vh] flex-1 rounded-xl md:min-h-min" />
         </div> */}
-              {children}
+        {children}
       </SidebarInset>
     </SidebarProvider>
   );

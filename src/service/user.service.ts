@@ -2,16 +2,17 @@ import { env } from "@/env";
 
 import { cookies } from "next/headers";
 
-export const authService = {
-  getSession: async () => {
+export const userService = {
+  getProfile: async () => {
     // Implementation for setting session
     try {
       const cookieStore = await cookies();
 
-      const res = await fetch(`${env.AUTH_URL}/get-session`, {
+      const res = await fetch(`${env.BACKEND_URL}/api/auth/me`, {
         headers: {
           Cookie: cookieStore.toString(),
         },
+
         cache: "no-store",
       });
       const session = await res.json();
@@ -26,23 +27,31 @@ export const authService = {
       };
     }
   },
-  logOut: async () => {
+  editProfile: async (id: string, data: { name: string }) => {
     // Implementation for setting session
     try {
       const cookieStore = await cookies();
 
-      const res = await fetch(`${env.NEXT_PUBLIC_AUTH_URL}/sign-out`, {
-        method: "POST",
+      const res = await fetch(`${env.BACKEND_URL}/api/user/${id}`, {
+        method: "PATCH",
+        body: JSON.stringify(data),
         headers: {
-          Origin: env.NEXT_PUBLIC_FRONTEND_URL,
+          "Content-Type": "application/json",
           Cookie: cookieStore.toString(),
         },
+
         cache: "no-store",
       });
+      const result = await res.json();
 
-      console.log(await res.json());
+      return { user: true, data: result, error: null };
     } catch (error) {
-      return error;
+      return {
+        user: false,
+        data: null,
+        error: "something went wrong",
+        details: error,
+      };
     }
   },
 };

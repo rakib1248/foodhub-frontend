@@ -274,7 +274,7 @@ export default function RegistationForm() {
         </Field>
       </CardFooter>
       <FieldDescription className="px-6 text-center">
-        Already have an account? <Link href="/logine">Sign in</Link>
+        Already have an account? <Link href="/login">Sign in</Link>
       </FieldDescription>
     </Card>
   );
