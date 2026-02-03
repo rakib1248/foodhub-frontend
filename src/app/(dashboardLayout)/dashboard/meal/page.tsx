@@ -1,12 +1,18 @@
-import React from "react";
+import ProviderMenuManager from "@/components/providerMeals";
+import { providerService } from "@/service/provider.service";
+import { userService } from "@/service/user.service";
 
-const MealPage = () => {
+async function Mealpage() {
+  const profile = await userService.getProfile();
+  const providerId = profile?.data?.data?.providerProfile?.id;
+
+  const { data } = await providerService.getSingleProvider(providerId);
+  console.log(data);
   return (
-    <div className="p-4">
-      <h1 className="text-xl font-bold">Meal Dashboard</h1>
-      <p>Manage your meals here.</p>
+    <div className="">
+      <ProviderMenuManager />
     </div>
   );
-};
+}
 
-export default MealPage;
+export default Mealpage;

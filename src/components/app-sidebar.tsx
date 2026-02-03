@@ -48,8 +48,8 @@ export const sidebarData: Record<string, any[]> = {
       title: "Service Management",
       items: [
         { title: "My Services", url: "/dashboard/my-services" },
-        { title: "Earning Reports", url: "/dashboard/earnings" },
-        { title: "Customer Requests", url: "/dashboard/requests" },
+        { title: "Create Meal", url: "/dashboard/mealcreate" },
+        { title: "my All meal", url: "/dashboard/meal" },
         { title: "My Profile", url: "/dashboard/profile" },
       ],
     },
@@ -110,7 +110,10 @@ export async function AppSidebar({
         </SidebarGroup>
       </SidebarContent>
       <form action={logOutServer}>
-        <Button type="submit" className=" cursor-pointer">
+        <Button
+          type="submit"
+          variant={"outline"}
+          className=" w-full cursor-pointer">
           Log Out
         </Button>
       </form>

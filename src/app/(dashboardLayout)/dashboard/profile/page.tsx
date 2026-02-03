@@ -13,6 +13,7 @@ import {
 import { userService } from "@/service/user.service";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Roles } from "@/constants/roles";
 
 export default async function ProfilePage() {
   const { data } = await userService.getProfile();
@@ -45,10 +46,26 @@ export default async function ProfilePage() {
             <Mail className="h-4 w-4" /> {user.email}
           </p>
         </div>
-        <div className=" absolute top-5 right-5 ">
-          <Button asChild >
+        <div className=" absolute top-5 right-5  flex flex-col gap-2">
+          <Button asChild>
             <Link href="/dashboard/profile/edit">Edit Profile</Link>
           </Button>
+
+          {user.role === Roles.provider && (
+            <>
+              <>
+                {user?.providerProfile ? (
+                  ""
+                ) : (
+                  <Button variant="outline" asChild>
+                    <Link href="/dashboard/profile/provider">
+                      Please Complete your Profile
+                    </Link>
+                  </Button>
+                )}
+              </>
+            </>
+          )}
         </div>
       </div>
 

@@ -5,22 +5,9 @@ import { Badge } from "@/components/ui/badge";
 import { MapPin, Phone, Utensils, Mail } from "lucide-react";
 import Link from "next/link";
 import { Button } from "./ui/button";
+import { ProviderData } from "@/types";
 
-// টাইপ ডিফাইন করা (ঐচ্ছিক কিন্তু ভালো প্র্যাকটিস)
-interface ProviderData {
-  id: string;
-  businessName: string;
-  description: string;
-  address: string;
-  phone: string;
-  user: {
-    name: string;
-    email: string;
-    image: string | null;
-    status: string;
-  };
-  meals: any[];
-}
+
 
 export default function ProviderList({
   providers,

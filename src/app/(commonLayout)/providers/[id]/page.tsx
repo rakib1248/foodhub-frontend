@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import { providerService } from "@/service/provider.service";
+import { meal } from "@/types";
 
 export default async function ProviderSinglePage({
   params,
@@ -26,30 +27,6 @@ export default async function ProviderSinglePage({
   // আপনার দেওয়া ডাটার একটি স্যাম্পল (সিঙ্গেল অবজেক্ট হিসেবে)
   const { id } = await params;
   const { data } = await providerService.getSingleProvider(id);
-
-  //   const provider = {
-  //     id: "45d8eae0-97d1-44d6-8e8e-ed19253dd188",
-  //     businessName: "test businessName",
-  //     description: "test businessName dec",
-  //     address: "ctg",
-  //     phone: "8767567",
-  //     user: {
-  //       name: "Rakibbai",
-  //       email: "raki45b@gmail.com",
-  //       status: "ACTIVE",
-  //       image: null,
-  //     },
-  //     meals: [
-  //       {
-  //         id: "768f3947-ccf6-4d28-816d-424e2eba2ed6",
-  //         name: "this is a test product",
-  //         description: "test description product",
-  //         price: 100,
-  //         image: null,
-  //         isAvailable: true,
-  //       },
-  //     ],
-  //   };
 
   const provider = data ? data.data : [];
   return (
@@ -115,7 +92,7 @@ export default async function ProviderSinglePage({
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {provider.meals.map((meal) => (
+          {provider.meals?.map((meal: meal) => (
             <Card
               key={meal.id}
               className="group overflow-hidden border-none shadow-md hover:shadow-xl transition-all duration-300">

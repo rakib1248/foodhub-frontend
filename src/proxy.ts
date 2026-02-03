@@ -4,8 +4,18 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { authService } from "./service/auth.service";
 
+const providerRestrictedRoutes = [
+  "/dashboard/profile/provider",
+  "/dashboard/mealcreate",
+  "/dashboard/meal",
+];
+
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  const isProviderRestrictedPath = providerRestrictedRoutes.some((path) =>
+    pathname.startsWith(path),
+  );
 
   // ১. সেশন ডাটা চেক করা
   const { data } = await authService.getSession();
@@ -13,8 +23,7 @@ export async function proxy(request: NextRequest) {
   const isRole: string = data?.user?.role;
 
   // ২. যদি ইউজার লগইন না থাকে এবং ড্যাশবোর্ড বা প্রটেক্টেড পেজে যেতে চায়
-    if (!isAuthenticated && pathname.startsWith("/dashboard"))
-    {
+  if (!isAuthenticated && pathname.startsWith("/dashboard")) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
@@ -22,7 +31,9 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
-
+  if (isRole !== Roles.provider && isProviderRestrictedPath) {
+    return NextResponse.redirect(new URL("/dashboard/profile", request.url));
+  }
 
   return NextResponse.next();
 }

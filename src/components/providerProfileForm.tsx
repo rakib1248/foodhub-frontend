@@ -22,46 +22,45 @@ import {
 
 import { Input } from "@/components/ui/input";
 
-import { authClient } from "@/lib/auth-clint";
-
 import { useRouter } from "next/navigation";
-import { userService } from "@/service/user.service";
-import { editProfile } from "@/actionServer/user.action";
 
+import { editProfile } from "@/actionServer/user.action";
+import { Textarea } from "./ui/textarea";
+import { providerprofileCreate } from "@/actionServer/provider.action";
 
 const formSchema = z.object({
-  name: z.string().min(1),
-  id: z.string().min(1),
+  businessName: z.string().min(1),
+  description: z.string().min(1).max(500),
+  address: z.string().min(1),
+  phone: z.string().min(1).max(20),
 });
 
-export default function EditForm({
-  data,
-}: {
-  data: { name: string; id: string };
-}) {
+export default function ProviderForm() {
   const router = useRouter();
   const form = useForm({
     defaultValues: {
-      name: data.name,
-      id: data.id,
+      businessName: "",
+      description: "",
+      address: "",
+      phone: "",
     },
     validators: {
       onSubmit: formSchema,
     },
     onSubmit: async ({ value }) => {
-      const lodingId = toast.loading("Update user Name");
+      const lodingId = toast.loading("Creating Bussness Profile");
 
       try {
-        console.log(value);
-          const result = await editProfile(value);
-          console.log(result)
+    
+        const result = await providerprofileCreate(value);
+       
 
         if (!result.data) {
-          toast.error("someting Is Wrong", { id: lodingId });
+          toast.error("Someting Is Wron Pleas Try Again", { id: lodingId });
           return;
         }
 
-        toast.success("Update succecfull", { id: lodingId });
+        toast.success("Create Bussness Profile succecfull", { id: lodingId });
         router.push("/dashboard/profile");
       } catch (erro) {
         toast.error("someting went Wron Please Try Again", {
@@ -77,7 +76,7 @@ export default function EditForm({
     <div className="flex justify-center items-center mt-6">
       <Card className="w-full sm:max-w-lg">
         <CardHeader>
-          <CardTitle>Edit Your Profile Name </CardTitle>
+          <CardTitle>Complete your Provider Profile </CardTitle>
         </CardHeader>
         <CardContent>
           <form
@@ -88,13 +87,16 @@ export default function EditForm({
             }}>
             <FieldGroup>
               <form.Field
-                name="name"
+                name="businessName"
                 children={(field) => {
                   const isInvalid =
                     field.state.meta.isTouched && !field.state.meta.isValid;
                   return (
                     <Field data-invalid={isInvalid}>
-                      <FieldLabel htmlFor={field.name}>Profile Name</FieldLabel>
+                      <FieldLabel htmlFor={field.name}>
+                        {" "}
+                        BusinessName Name
+                      </FieldLabel>
                       <Input
                         id={field.name}
                         name={field.name}
@@ -110,16 +112,63 @@ export default function EditForm({
                 }}
               />
               <form.Field
-                name="id"
+                name="description"
                 children={(field) => {
                   const isInvalid =
                     field.state.meta.isTouched && !field.state.meta.isValid;
                   return (
                     <Field data-invalid={isInvalid}>
+                      <FieldLabel htmlFor={field.name}>
+                        Description Name
+                      </FieldLabel>
+                      <Textarea
+                        id={field.name}
+                        name={field.name}
+                        // type="text"
+                        value={field.state.value}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                      />
+                      {isInvalid && (
+                        <FieldError errors={field.state.meta.errors} />
+                      )}
+                    </Field>
+                  );
+                }}
+              />
+              <form.Field
+                name="address"
+                children={(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid;
+                  return (
+                    <Field data-invalid={isInvalid}>
+                      <FieldLabel htmlFor={field.name}>Your address</FieldLabel>
                       <Input
                         id={field.name}
                         name={field.name}
-                        type="hidden"
+                        type="text"
+                        value={field.state.value}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                      />
+                      {isInvalid && (
+                        <FieldError errors={field.state.meta.errors} />
+                      )}
+                    </Field>
+                  );
+                }}
+              />
+              <form.Field
+                name="phone"
+                children={(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid;
+                  return (
+                    <Field data-invalid={isInvalid}>
+                      <FieldLabel htmlFor={field.name}>Phone Number</FieldLabel>
+                      <Input
+                        id={field.name}
+                        name={field.name}
+                        type="text"
                         value={field.state.value}
                         onChange={(e) => field.handleChange(e.target.value)}
                       />
