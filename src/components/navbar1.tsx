@@ -1,6 +1,6 @@
 // "use client";
 
-import { Book, Menu, Sunset, Trees, Zap } from "lucide-react";
+import { Book, Menu, ShoppingCart, Sunset, Trees, Zap } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -30,6 +30,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { authService } from "@/service/auth.service";
 import { logOutServer } from "@/actionServer/auth.action.server";
+import { GetToCard } from "@/actionServer/card.action";
 // import imageLogo from "../../public/img/image.png";
 const imageLogo = "../../img/image.png";
 
@@ -93,6 +94,9 @@ const Navbar1 = async ({
   className,
 }: Navbar1Props) => {
   const { data } = await authService.getSession();
+  const { data: response } = await GetToCard();
+
+  const items = response?.data?.items || [];
 
   return (
     <section className={cn("py-4", className)}>
@@ -123,6 +127,14 @@ const Navbar1 = async ({
             {data ? (
               <>
                 {" "}
+                <Button asChild className=" cursor-pointer relative p-5">
+                  <Link href="/card">
+                    <span className="absolute bottom-6 right-1 flex justify-center items-center rounded-full w-4 h-4 z-10 bg-blue-500">
+                      {items.length ?? 0}
+                    </span>
+                    <ShoppingCart />
+                  </Link>
+                </Button>
                 <form action={logOutServer}>
                   <Button
                     type="submit"
@@ -185,7 +197,16 @@ const Navbar1 = async ({
                   <div className="flex flex-col gap-3">
                     {data ? (
                       <>
-                        {" "}
+                        <Button
+                          asChild
+                          className=" cursor-pointer relative p-5">
+                          <Link href="/card">
+                            <span className="absolute bottom-6 right-1 flex justify-center items-center rounded-full w-4 h-4 z-10 bg-blue-500">
+                              {items.length ?? 0}
+                            </span>
+                            <ShoppingCart />
+                          </Link>
+                        </Button>
                         <form action={logOutServer}>
                           <Button
                             type="submit"

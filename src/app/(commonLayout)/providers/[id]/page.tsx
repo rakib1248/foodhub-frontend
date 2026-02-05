@@ -127,7 +127,9 @@ export default async function ProviderSinglePage({
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   {meal.description}
                 </p>
-                <Button className="w-full font-bold group-hover:translate-y-[-2px] transition-transform">
+                <Button
+                
+                  className="w-full font-bold group-hover:translate-y-[-2px] transition-transform">
                   Add to Cart
                 </Button>
               </CardContent>

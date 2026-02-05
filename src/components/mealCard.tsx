@@ -11,8 +11,29 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { meal } from "@/types";
+import { addToCard } from "@/actionServer/card.action";
+import { toast } from "sonner";
 
 export function MealCard({ meal }: { meal: meal }) {
+  const handleAddToCard = async (mealId: string) => {
+    const lodingId = toast.loading("Add To Card");
+    try {
+      const { data } = await addToCard({ mealId });
+
+      if (!data.ok) {
+        toast.error(data.message ? data.message : "Meal add Faild", {
+          id: lodingId,
+        });
+        return;
+      }
+      toast.success("Meal add To Card Successfull", { id: lodingId });
+    
+    } catch (erro) {
+      toast.error("someting went Wron Please Try Again", {
+        id: lodingId,
+      });
+    }
+  };
   const avgRating =
     meal.reviews?.length > 0
       ? (
@@ -66,6 +87,7 @@ export function MealCard({ meal }: { meal: meal }) {
 
       <CardFooter className="p-4 pt-0">
         <Button
+          onClick={() => handleAddToCard(meal.id)}
           className="w-full bg-slate-900 hover:bg-orange-600 text-white gap-2"
           disabled={!meal.isAvailable}>
           <ShoppingCart size={18} />

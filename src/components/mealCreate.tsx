@@ -68,10 +68,10 @@ export default function MealCreateForm({
       const lodingId = toast.loading("Creating Meal...");
 
       try {
-        const result = await mealCreate(value)
-        console.log(value);
-         if (!result.data) {
-           toast.error("Meal Creation Faild", { id: lodingId });
+        const {data} = await mealCreate(value)
+       
+         if (!data.ok) {
+           toast.error(data.message ? data.message : "Meal Creation Faild", { id: lodingId });
            return;
          }
         toast.success("Meal Create Successfull", { id: lodingId });

@@ -38,10 +38,9 @@ export const sidebarData: Record<string, any[]> = {
     {
       title: "My Activity",
       items: [
-        { title: "Order History", url: "/dashboard/orders" },
+        { title: "Order History", url: "/dashboard/order" },
         { title: "My Profile", url: "/dashboard/profile" },
-        { title: "Wishlist", url: "/dashboard/wishlist" },
-        { title: "My Profile", url: "/dashboard/profile" },
+     
       ],
     },
   ],
@@ -74,7 +73,7 @@ export async function AppSidebar({
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <a href="#">
+              <Link href="/">
                 <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
                   <BookUser className="size-4" />
                 </div>
@@ -82,7 +81,7 @@ export async function AppSidebar({
                   <span className="font-medium"> {user.name} </span>
                   <span className="">{user.email}</span>
                 </div>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

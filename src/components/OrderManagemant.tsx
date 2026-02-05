@@ -20,8 +20,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ShoppingBag, Clock, CheckCircle2, XCircle } from "lucide-react";
 import { format } from "date-fns"; // npm install date-fns
-import { changhStatus } from "@/actionServer/order.action";
+import { cencelStatus, changhStatus } from "@/actionServer/order.action";
 import { toast } from "sonner";
+import { Roles } from "@/constants/roles";
 
 // স্ট্যাটাস অনুযায়ী কালার সেট করা
 const getStatusStyles = (status: string) => {
@@ -49,11 +50,24 @@ export default function OrderManagement({
   userRole: "ADMIN" | "PROVIDER" | "CUSTOMER";
 }) {
   const handleStatusChange = async (orderId: string, newStatus: string) => {
-    console.log(`Updating order ${orderId} to ${newStatus}`);
+    if (userRole === "CUSTOMER") {
+      try {
+        const { data } = await cencelStatus(orderId, newStatus);
+
+        if (!data.ok) {
+          toast.error(data?.message ? data?.message : "Status Update Faild");
+          return;
+        }
+        toast.success("Status Update Successfully");
+        return;
+      } catch (error) {
+        toast.error("someting is Wrong Please Try agaian");
+      }
+    }
 
     try {
       const { data } = await changhStatus(orderId, newStatus);
-      console.log(data);
+
       if (!data.ok) {
         toast.error(data?.message ? data?.message : "Status Update Faild");
         return;

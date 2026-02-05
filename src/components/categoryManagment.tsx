@@ -37,7 +37,7 @@ export default function CategoryManager({ categories }: { categories: any[] }) {
     if (confirm("Are you sure? This will delete the category!")) {
       try {
         const { data } = await deleteCategory(id);
-        console.log(data);
+        
         if (!data.ok) {
           toast.error(data?.message ? data?.message : "Category Deleted Faild");
           return;
