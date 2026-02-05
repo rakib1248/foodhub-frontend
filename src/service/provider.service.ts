@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 
 export const providerService = {
   getAllProvider: async () => {
-    // Implementation for setting session
+ 
     try {
       const cookieStore = await cookies();
 

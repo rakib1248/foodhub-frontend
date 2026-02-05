@@ -8,12 +8,22 @@ const providerRestrictedRoutes = [
   "/dashboard/profile/provider",
   "/dashboard/mealcreate",
   "/dashboard/meal",
+  "/dashboard/category",
+  "/dashboard/categorycreate",
+];
+const adminRestrictedRoutes = [
+  "/dashboard/profile/admin",
+  "/dashboard/category",
+  "/dashboard/categorycreate",
 ];
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   const isProviderRestrictedPath = providerRestrictedRoutes.some((path) =>
+    pathname.startsWith(path),
+  );
+  const isAdminRestrictedPath = adminRestrictedRoutes.some((path) =>
     pathname.startsWith(path),
   );
 

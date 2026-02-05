@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/card";
 import {
   Field,
- 
   FieldError,
   FieldGroup,
   FieldLabel,
@@ -22,26 +21,30 @@ import {
 
 import { Input } from "@/components/ui/input";
 
-
 import { useRouter } from "next/navigation";
-import { editProfile } from "@/actionServer/user.action";
 
+import { editProfile } from "@/actionServer/user.action";
+import { mealUpdate } from "@/actionServer/meal.action";
 
 const formSchema = z.object({
   name: z.string().min(1),
-  id: z.string().min(1),
+  description: z.string().min(1),
+  price: z.number().min(2),
 });
 
-export default function EditForm({
+export default function MealUpdateForm({
   data,
+  id,
 }: {
-  data: { name: string; id: string };
+  data: { name: string; description: string; price: Number };
+  id: string;
 }) {
   const router = useRouter();
   const form = useForm({
     defaultValues: {
       name: data.name,
-      id: data.id,
+      description: data.description,
+      price: Number(data.price),
     },
     validators: {
       onSubmit: formSchema,
@@ -50,17 +53,16 @@ export default function EditForm({
       const lodingId = toast.loading("Update user Name");
 
       try {
-        console.log(value);
-          const {data} = await editProfile(value);
-         
+        const {data} = await mealUpdate(id, value);
+        console.log(data)
 
-        if (!data.ok) {
-          toast.error("someting Is Wrong", { id: lodingId });
+        if (!data?.ok) {
+          toast.error( data?.message ? data?.message: "someting Is Wrong", { id: lodingId });
           return;
         }
 
-        toast.success("Update succecfull", { id: lodingId });
-        router.push("/dashboard/profile");
+        toast.success(" meal Update succecfull", { id: lodingId });
+        router.push("/dashboard/meal");
       } catch (erro) {
         toast.error("someting went Wron Please Try Again", {
           id: lodingId,
@@ -75,7 +77,7 @@ export default function EditForm({
     <div className="flex justify-center items-center mt-6">
       <Card className="w-full sm:max-w-lg">
         <CardHeader>
-          <CardTitle>Edit Your Profile Name </CardTitle>
+          <CardTitle>Edit Your Meal </CardTitle>
         </CardHeader>
         <CardContent>
           <form
@@ -108,18 +110,49 @@ export default function EditForm({
                 }}
               />
               <form.Field
-                name="id"
+                name="description"
                 children={(field) => {
                   const isInvalid =
                     field.state.meta.isTouched && !field.state.meta.isValid;
                   return (
                     <Field data-invalid={isInvalid}>
+                      <FieldLabel htmlFor={field.name}>Profile Name</FieldLabel>
                       <Input
                         id={field.name}
                         name={field.name}
-                        type="hidden"
+                        type="text"
                         value={field.state.value}
                         onChange={(e) => field.handleChange(e.target.value)}
+                      />
+                      {isInvalid && (
+                        <FieldError errors={field.state.meta.errors} />
+                      )}
+                    </Field>
+                  );
+                }}
+              />
+              <form.Field
+                name="price"
+                children={(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid;
+                  return (
+                    <Field data-invalid={isInvalid}>
+                      <FieldLabel htmlFor={field.name}>Profile Name</FieldLabel>
+                      <Input
+                        id={field.name}
+                        name={field.name}
+                        type="text"
+                        value={field.state.value as number}
+                        onChange={(e) => {
+                          const value = e.target.value;
+
+                          if (/^\d*$/.test(value)) {
+                            field.handleChange(
+                              value === "" ? 0 : Number(value),
+                            );
+                          }
+                        }}
                       />
                       {isInvalid && (
                         <FieldError errors={field.state.meta.errors} />

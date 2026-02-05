@@ -27,7 +27,9 @@ export const sidebarData: Record<string, any[]> = {
       items: [
         { title: "User Management", url: "/dashboard/users" },
         { title: "System Settings", url: "/dashboard/settings" },
-        { title: "Reports", url: "/dashboard/reports" },
+        { title: "Order", url: "/dashboard/order" },
+
+        { title: "Category", url: "/dashboard/category" },
         { title: "My Profile", url: "/dashboard/profile" },
       ],
     },
@@ -47,9 +49,11 @@ export const sidebarData: Record<string, any[]> = {
     {
       title: "Service Management",
       items: [
-        { title: "My Services", url: "/dashboard/my-services" },
-        { title: "Create Meal", url: "/dashboard/mealcreate" },
         { title: "my All meal", url: "/dashboard/meal" },
+        { title: "Order", url: "/dashboard/order" },
+
+        { title: "Category", url: "/dashboard/category" },
+        { title: "Create Meal", url: "/dashboard/mealcreate" },
         { title: "My Profile", url: "/dashboard/profile" },
       ],
     },

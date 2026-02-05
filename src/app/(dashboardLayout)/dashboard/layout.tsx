@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Roles } from "@/constants/roles";
 import { authService } from "@/service/auth.service";
-
+export const dynamic = "force-dynamic";
 export default async function LayoutPage({
   children,
   admin,

@@ -24,7 +24,7 @@ import { Input } from "@/components/ui/input";
 
 import { useRouter } from "next/navigation";
 
-import { editProfile } from "@/actionServer/user.action";
+
 import { Textarea } from "./ui/textarea";
 import { providerprofileCreate } from "@/actionServer/provider.action";
 

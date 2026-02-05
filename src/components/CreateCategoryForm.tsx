@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/card";
 import {
   Field,
- 
   FieldError,
   FieldGroup,
   FieldLabel,
@@ -22,45 +21,35 @@ import {
 
 import { Input } from "@/components/ui/input";
 
-
 import { useRouter } from "next/navigation";
-import { editProfile } from "@/actionServer/user.action";
-
+import { createCategory } from "@/actionServer/category.action";
 
 const formSchema = z.object({
   name: z.string().min(1),
-  id: z.string().min(1),
 });
 
-export default function EditForm({
-  data,
-}: {
-  data: { name: string; id: string };
-}) {
+export default function CreateCategoryForm() {
   const router = useRouter();
   const form = useForm({
     defaultValues: {
-      name: data.name,
-      id: data.id,
+      name: "",
     },
     validators: {
       onSubmit: formSchema,
     },
     onSubmit: async ({ value }) => {
-      const lodingId = toast.loading("Update user Name");
+      const lodingId = toast.loading("Creating Category");
 
       try {
-        console.log(value);
-          const {data} = await editProfile(value);
-         
+        const { data } = await createCategory(value.name);
 
         if (!data.ok) {
-          toast.error("someting Is Wrong", { id: lodingId });
+          toast.error(data.message? data.message :"someting Is Wrong", { id: lodingId });
           return;
         }
 
-        toast.success("Update succecfull", { id: lodingId });
-        router.push("/dashboard/profile");
+        toast.success("Create Category succecfull", { id: lodingId });
+        router.push("/dashboard/category");
       } catch (erro) {
         toast.error("someting went Wron Please Try Again", {
           id: lodingId,
@@ -75,7 +64,7 @@ export default function EditForm({
     <div className="flex justify-center items-center mt-6">
       <Card className="w-full sm:max-w-lg">
         <CardHeader>
-          <CardTitle>Edit Your Profile Name </CardTitle>
+          <CardTitle>Create Your Category </CardTitle>
         </CardHeader>
         <CardContent>
           <form
@@ -92,32 +81,11 @@ export default function EditForm({
                     field.state.meta.isTouched && !field.state.meta.isValid;
                   return (
                     <Field data-invalid={isInvalid}>
-                      <FieldLabel htmlFor={field.name}>Profile Name</FieldLabel>
+                      <FieldLabel htmlFor={field.name}>Category Name</FieldLabel>
                       <Input
                         id={field.name}
                         name={field.name}
                         type="text"
-                        value={field.state.value}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                      />
-                      {isInvalid && (
-                        <FieldError errors={field.state.meta.errors} />
-                      )}
-                    </Field>
-                  );
-                }}
-              />
-              <form.Field
-                name="id"
-                children={(field) => {
-                  const isInvalid =
-                    field.state.meta.isTouched && !field.state.meta.isValid;
-                  return (
-                    <Field data-invalid={isInvalid}>
-                      <Input
-                        id={field.name}
-                        name={field.name}
-                        type="hidden"
                         value={field.state.value}
                         onChange={(e) => field.handleChange(e.target.value)}
                       />

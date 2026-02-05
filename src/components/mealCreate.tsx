@@ -32,6 +32,8 @@ import {
 
 import { Roles as userRole } from "@/constants/roles";
 import { Input } from "./ui/input";
+import { mealCreate } from "@/actionServer/meal.action";
+import { useRouter } from "next/navigation";
 
 const Roles = [
   { label: "Customer", value: userRole.user },
@@ -42,11 +44,16 @@ const Roles = [
 const formSchema = z.object({
   name: z.string().min(1, "This field is requred"),
   description: z.string().min(1, "This field is requred"),
-  price: z.number().min(1, "This field is requred"),
+  price: z.number().min(2, "price requred namber minimum 2 lentgh"),
   categoryId: z.string().min(1, "This field is requred"),
 });
 
-export default function MealCreateForm() {
+export default function MealCreateForm({
+  meal,
+}: {
+  meal: { name: string; id: string }[];
+  }) {
+  const router = useRouter();
   const form = useForm({
     defaultValues: {
       name: "",
@@ -61,23 +68,14 @@ export default function MealCreateForm() {
       const lodingId = toast.loading("Creating Meal...");
 
       try {
-        // const result = await authClient.signUp.email({
-        //   name: value.name,
-        //   email: value.email,
-        //   password: value.password,
-        //   role: value.role,
-        // });
+        const result = await mealCreate(value)
         console.log(value);
-        // if (!result.data) {
-        //   toast.error(
-        //     result.error.message
-        //       ? result.error.message
-        //       : "someting went Wron Please Try Again",
-        //     { id: lodingId },
-        //   );
-        //   return;
-        // }
+         if (!result.data) {
+           toast.error("Meal Creation Faild", { id: lodingId });
+           return;
+         }
         toast.success("Meal Create Successfull", { id: lodingId });
+        router.push("/dashboard/meal");
       } catch (erro) {
         toast.error("someting went Wron Please Try Again", {
           id: lodingId,
@@ -92,9 +90,7 @@ export default function MealCreateForm() {
     <Card className="w-full sm:max-w-lg">
       <CardHeader>
         <CardTitle>ADD your New Meal</CardTitle>
-        <CardDescription>
-           FoodHub  Seller 
-        </CardDescription>
+        <CardDescription>FoodHub Seller</CardDescription>
       </CardHeader>
       <CardContent>
         <form
@@ -162,10 +158,19 @@ export default function MealCreateForm() {
                       <Input
                         id={field.name}
                         name={field.name}
-                        type="number"
+                        type="text"
                         value={field.state.value}
                         onChange={(e) =>
-                          field.handleChange(Number(e.target.value))
+                          // field.handleChange(Number(e.target.value))
+                          {
+                            const value = e.target.value;
+
+                            if (/^\d*$/.test(value)) {
+                              field.handleChange(
+                                value === "" ? 0 : Number(value),
+                              );
+                            }
+                          }
                         }
                       />
                       {isInvalid && (
@@ -204,11 +209,9 @@ export default function MealCreateForm() {
                       </SelectTrigger>
                       <SelectContent position="item-aligned">
                         <SelectSeparator />
-                        {Roles.map((role) => (
-                          <SelectItem
-                            key={role?.value}
-                            value={role ? role.value : ""}>
-                            {role?.label}
+                        {meal.map((m) => (
+                          <SelectItem key={m?.id} value={m ? m.id : ""}>
+                            {m?.name}
                           </SelectItem>
                         ))}
                       </SelectContent>

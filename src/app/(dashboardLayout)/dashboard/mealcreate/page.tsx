@@ -1,9 +1,13 @@
 import MealCreateForm from "@/components/mealCreate";
+import { categoryService } from "@/service/category.service";
+export const dynamic = "force-dynamic";
 
-function CreateMealpage() {
+async function CreateMealpage() {
+  const { data } = await categoryService.getAllCategory();
+
   return (
     <div className=" flex justify-center mt-7">
-      <MealCreateForm />
+      <MealCreateForm meal={data?.data} />
     </div>
   );
 }

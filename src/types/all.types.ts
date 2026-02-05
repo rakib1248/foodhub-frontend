@@ -1,3 +1,4 @@
+
 export type providerProfile = {
   businessName: string;
   description: string;
@@ -7,11 +8,23 @@ export type providerProfile = {
 
 export type meal = {
   id: string;
-  image: string;
+  image?: string | null; // ইমেজ না-ও থাকতে পারে
   name: string;
   isAvailable: boolean;
   price: number;
   description: string;
+  categoryId: string;
+  reviews: {
+    rating: number;
+  }[];
+  category?: {
+    // '?' যোগ করা হয়েছে কারণ এটি undefined হতে পারে
+    name: string;
+  };
+  provider?: {
+    // '?' যোগ করা হয়েছে
+    businessName: string;
+  };
 };
 
 export interface ProviderData {
@@ -26,5 +39,5 @@ export interface ProviderData {
     image: string | null;
     status: string;
   };
-  meals: meal[];
+  meals: Partial<meal[]>;
 }

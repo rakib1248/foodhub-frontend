@@ -72,7 +72,7 @@ export default function RegistationForm() {
     },
     onSubmit: async ({ value }) => {
       const lodingId = toast.loading("Creating user...");
-      console.log(value);
+    
 
       try {
   
@@ -83,8 +83,8 @@ export default function RegistationForm() {
           password: value.password,
           role: value.role,
        
-        });
-        console.log(result);
+        }as any);
+     
         if (!result.data) {
           toast.error(
             result.error.message
