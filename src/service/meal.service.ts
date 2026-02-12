@@ -1,6 +1,16 @@
 import { env } from "@/env";
 
 import { cookies } from "next/headers";
+import { object } from "zod";
+
+export interface getMealParams {
+  categoryId?: string;
+  providerId?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  isAvailable?: boolean;
+  search?: string;
+}
 
 export const mealService = {
   mealCreate: async (data: {
@@ -34,11 +44,22 @@ export const mealService = {
       };
     }
   },
-  getAllMeal: async () => {
+  getAllMeal: async (params?: getMealParams) => {
     try {
       const cookieStore = await cookies();
 
-      const res = await fetch(`${env.BACKEND_URL}/api/meal`, {
+      const url = new URL(`${env.BACKEND_URL}/api/meal`);
+
+      if (params) {
+        Object.entries(params).forEach(([Key, value]) => {
+          if (value !== undefined && value !== null && value !== "") {
+            url.searchParams.append(Key, value);
+          }
+        });
+      }
+    
+
+      const res = await fetch(url.toString(), {
         method: "GET",
 
         headers: {

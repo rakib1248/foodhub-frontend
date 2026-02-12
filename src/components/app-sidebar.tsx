@@ -40,7 +40,6 @@ export const sidebarData: Record<string, any[]> = {
       items: [
         { title: "Order History", url: "/dashboard/order" },
         { title: "My Profile", url: "/dashboard/profile" },
-     
       ],
     },
   ],
@@ -78,8 +77,10 @@ export async function AppSidebar({
                   <BookUser className="size-4" />
                 </div>
                 <div className="flex flex-col gap-0.5 leading-none">
-                  <span className="font-medium"> {user.name} </span>
-                  <span className="">{user.email}</span>
+                  <div className="flex flex-col gap-0.5 leading-none">
+                    <span className="font-medium"> {user?.name} </span>
+                    <span className="">{user?.email}</span>
+                  </div>
                 </div>
               </Link>
             </SidebarMenuButton>

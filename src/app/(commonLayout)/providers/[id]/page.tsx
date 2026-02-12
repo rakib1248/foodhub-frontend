@@ -4,27 +4,24 @@ import {
   Phone,
   Mail,
   Utensils,
-  Store,
-  Star,
+
   ChevronLeft,
   CheckCircle2,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import { providerService } from "@/service/provider.service";
 import { meal } from "@/types";
+import ProviderMeal from "@/components/ProviderMeal";
 
 export default async function ProviderSinglePage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
-  // বাস্তব ক্ষেত্রে এখানে আপনি ID দিয়ে ডাটা ফেচ করবেন
 
-  // আপনার দেওয়া ডাটার একটি স্যাম্পল (সিঙ্গেল অবজেক্ট হিসেবে)
   const { id } = await params;
   const { data } = await providerService.getSingleProvider(id);
 
@@ -93,47 +90,48 @@ export default async function ProviderSinglePage({
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {provider.meals?.map((meal: meal) => (
-            <Card
-              key={meal.id}
-              className="group overflow-hidden border-none shadow-md hover:shadow-xl transition-all duration-300">
-              <div className="aspect-video bg-muted relative overflow-hidden">
-                {meal.image ? (
-                  <img
-                    src={meal.image}
-                    alt={meal.name}
-                    className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500"
-                  />
-                ) : (
-                  <div className="flex items-center justify-center h-full bg-primary/5">
-                    <Utensils className="size-12 text-primary/20" />
-                  </div>
-                )}
-                <div className="absolute top-3 right-3">
-                  <Badge variant={meal.isAvailable ? "default" : "destructive"}>
-                    {meal.isAvailable ? "Available" : "Sold Out"}
-                  </Badge>
-                </div>
-              </div>
+            // <Card
+            //   key={meal.id}
+            //   className="group overflow-hidden border-none shadow-md hover:shadow-xl transition-all duration-300">
+            //   <div className="aspect-video bg-muted relative overflow-hidden">
+            //     {meal.image ? (
+            //       <img
+            //         src={meal.image}
+            //         alt={meal.name}
+            //         className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500"
+            //       />
+            //     ) : (
+            //       <div className="flex items-center justify-center h-full bg-primary/5">
+            //         <Utensils className="size-12 text-primary/20" />
+            //       </div>
+            //     )}
+            //     <div className="absolute top-3 right-3">
+            //       <Badge variant={meal.isAvailable ? "default" : "destructive"}>
+            //         {meal.isAvailable ? "Available" : "Sold Out"}
+            //       </Badge>
+            //     </div>
+            //   </div>
 
-              <CardContent className="p-6 space-y-4">
-                <div className="flex justify-between items-start">
-                  <h3 className="text-xl font-bold group-hover:text-primary transition-colors">
-                    {meal.name}
-                  </h3>
-                  <span className="text-2xl font-black text-primary">
-                    ${meal.price}
-                  </span>
-                </div>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {meal.description}
-                </p>
-                <Button
-                
-                  className="w-full font-bold group-hover:translate-y-[-2px] transition-transform">
-                  Add to Cart
-                </Button>
-              </CardContent>
-            </Card>
+            //   <CardContent className="p-6 space-y-4">
+            //     <div className="flex justify-between items-start">
+            //       <h3 className="text-xl font-bold group-hover:text-primary transition-colors">
+            //         {meal.name}
+            //       </h3>
+            //       <span className="text-2xl font-black text-primary">
+            //         ${meal.price}
+            //       </span>
+            //     </div>
+            //     <p className="text-sm text-muted-foreground leading-relaxed">
+            //       {meal.description}
+            //     </p>
+            //     <Button
+
+            //       className="w-full font-bold group-hover:translate-y-[-2px] transition-transform">
+            //       Add to Cart
+            //     </Button>
+            //   </CardContent>
+            // </Card>
+            <ProviderMeal key={meal.id} meal={meal} />
           ))}
         </div>
       </div>

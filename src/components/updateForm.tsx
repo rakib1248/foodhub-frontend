@@ -50,7 +50,7 @@ export default function EditForm({
       const lodingId = toast.loading("Update user Name");
 
       try {
-        console.log(value);
+       
           const {data} = await editProfile(value);
          
 

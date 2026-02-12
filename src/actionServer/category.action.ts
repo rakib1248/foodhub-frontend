@@ -10,6 +10,13 @@ export const createCategory = async (name: string) => {
     throw new Error("SomeTing Is wrong...");
   }
 };
+export const getCategory = async () => {
+  try {
+    return await categoryService.getAllCategory();
+  } catch (error) {
+    throw new Error("SomeTing Is wrong...");
+  }
+};
 export const updateCategory = async (id: string, name: string) => {
   try {
     const result = await categoryService.updateCategory(id, name);

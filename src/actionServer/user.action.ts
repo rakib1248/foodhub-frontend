@@ -9,3 +9,11 @@ export const editProfile = async (value: { id: string; name: string }) => {
     throw new Error("SomeTing Is wrong...");
   }
 };
+
+export const editStatus = async (value: { id: string; status: string }) => {
+  try {
+    return await userService.editStatus(value);
+  } catch (error) {
+    throw new Error("SomeTing Is wrong...");
+  }
+};

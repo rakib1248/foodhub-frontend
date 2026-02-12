@@ -52,7 +52,7 @@ export default function MealCreateForm({
   meal,
 }: {
   meal: { name: string; id: string }[];
-  }) {
+}) {
   const router = useRouter();
   const form = useForm({
     defaultValues: {
@@ -68,12 +68,14 @@ export default function MealCreateForm({
       const lodingId = toast.loading("Creating Meal...");
 
       try {
-        const {data} = await mealCreate(value)
-       
-         if (!data.ok) {
-           toast.error(data.message ? data.message : "Meal Creation Faild", { id: lodingId });
-           return;
-         }
+        const { data } = await mealCreate(value);
+
+        if (!data?.ok) {
+          toast.error(data?.message ?? "Meal Creation Failed", {
+            id: lodingId,
+          });
+          return;
+        }
         toast.success("Meal Create Successfull", { id: lodingId });
         router.push("/dashboard/meal");
       } catch (erro) {

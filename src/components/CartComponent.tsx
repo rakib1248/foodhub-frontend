@@ -129,7 +129,7 @@ export default function CartItems({ items }: { items: any[] }) {
           <p className="text-xl font-bold text-slate-900">৳{subTotal}</p>
         </div>
         <Button disabled asChild className="bg-slate-900 hover:bg-orange-600">
-          <Link href="/checkout"> Proceed to Checkout</Link>
+          <Link href="/chackout"> Proceed to Checkout</Link>
         </Button>
       </div>
     </div>

@@ -13,6 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { meal } from "@/types";
 import { addToCard } from "@/actionServer/card.action";
 import { toast } from "sonner";
+import Link from "next/link";
 
 export function MealCard({ meal }: { meal: meal }) {
   const handleAddToCard = async (mealId: string) => {
@@ -20,14 +21,13 @@ export function MealCard({ meal }: { meal: meal }) {
     try {
       const { data } = await addToCard({ mealId });
 
-      if (!data.ok) {
+      if (!data?.ok) {
         toast.error(data.message ? data.message : "Meal add Faild", {
           id: lodingId,
         });
         return;
       }
       toast.success("Meal add To Card Successfull", { id: lodingId });
-    
     } catch (erro) {
       toast.error("someting went Wron Please Try Again", {
         id: lodingId,
@@ -45,6 +45,7 @@ export function MealCard({ meal }: { meal: meal }) {
   return (
     <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300 border-slate-200">
       {/* ইমেজ সেকশন */}
+      <Link href={`/meals/${meal.id}`}>
       <div className="relative h-48 w-full bg-slate-100">
         {meal.image ? (
           <Image
@@ -62,7 +63,8 @@ export function MealCard({ meal }: { meal: meal }) {
         <Badge className="absolute top-2 right-2 bg-orange-500 hover:bg-orange-600">
           {meal?.category?.name}
         </Badge>
-      </div>
+        </div>
+        </Link>
 
       <CardHeader className="p-4 pb-2">
         <div className="flex justify-between items-start">

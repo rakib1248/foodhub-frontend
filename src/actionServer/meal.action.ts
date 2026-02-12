@@ -1,6 +1,6 @@
 "use server";
 
-import { mealService } from "@/service/meal.service";
+import { getMealParams, mealService } from "@/service/meal.service";
 
 import { revalidatePath } from "next/cache";
 
@@ -19,6 +19,15 @@ export const mealCreate = async (data: {
   }
 };
 
+export const getMeal = async ( getParams?: getMealParams ) => {
+  try {
+    const result = await mealService.getAllMeal(getParams);
+ 
+    return result;
+  } catch (error) {
+    throw new Error("SomeTing Is wrong...");
+  }
+};
 export const deleteMeal = async (id: string) => {
   try {
     const result = await mealService.deleteMeal(id);
