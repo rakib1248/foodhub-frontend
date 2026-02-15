@@ -18,6 +18,8 @@ import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { toast } from "sonner";
 
+import { addToCard } from "@/actionServer/card.action";
+
 interface Review {
   id: string;
   rating: number;
@@ -64,9 +66,25 @@ export function MealDetailsClient({ meal }: { meal: Meal }) {
         ).toFixed(1)
       : "0";
 
-  const handleAddToCart = () => {
-    toast.success(`Added ${quantity}x ${meal.name} to cart!`);
-    // আপনার cart logic এখানে
+  const handleAddToCart = async () => {
+    try {
+      const { data } = await addToCard({
+        mealId: meal.id,
+        quantity: quantity,
+      });
+
+      if (!data.ok) {
+        toast.error(data?.message ? data?.message : "Quwantity Update Faild");
+        return;
+      }
+      toast.success(
+        data?.message
+          ? data.message
+          : `Added ${quantity}x ${meal.name} to cart!`,
+      );
+    } catch (error) {
+      toast.error("someting is Wrong Please Try agaian");
+    }
   };
 
   const incrementQuantity = () => setQuantity((prev) => prev + 1);
@@ -217,6 +235,7 @@ export function MealDetailsClient({ meal }: { meal: Meal }) {
             {meal.reviews.map((review) => (
               <Card key={review.id}>
                 <CardContent className="pt-6">
+                 
                   <div className="flex items-start gap-4">
                     <Avatar>
                       <AvatarFallback>

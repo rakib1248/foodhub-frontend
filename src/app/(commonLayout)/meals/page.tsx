@@ -6,7 +6,7 @@ import { meal } from "@/types";
 
 export const dynamic = "force-dynamic";
 
-interface PageProps {
+export interface PageProps {
   searchParams: Promise<{
     categoryId?: string;
     providerId?: string;
