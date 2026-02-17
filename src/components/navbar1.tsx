@@ -1,14 +1,12 @@
 // "use client";
 
-import { Book, Menu, ShoppingCart, Sunset, Trees, Zap } from "lucide-react";
+import {  Menu, ShoppingCart} from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
 import {
   Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
+
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import {
@@ -31,7 +29,7 @@ import Link from "next/link";
 import { authService } from "@/service/auth.service";
 import { logOutServer } from "@/actionServer/auth.action.server";
 import { GetToCard } from "@/actionServer/card.action";
-// import imageLogo from "../../public/img/image.png";
+
 const imageLogo = "../../img/image.png";
 
 interface MenuItem {
@@ -39,7 +37,7 @@ interface MenuItem {
   url: string;
   description?: string;
   icon?: React.ReactNode;
-  // items?: MenuItem[];
+
 }
 
 interface Navbar1Props {
@@ -105,7 +103,7 @@ const Navbar1 = async ({
         <nav className="hidden items-center justify-between lg:flex">
           <div className="flex items-center gap-6">
             {/* Logo */}
-            <a href={logo.url} className="flex relative items-center gap-2">
+            <Link href={logo.url} className="flex relative items-center gap-2">
               <img
                 src={logo.src}
                 className="max-h-8 dark:invert"
@@ -114,7 +112,7 @@ const Navbar1 = async ({
               <span className="text-lg font-semibold tracking-tighter">
                 {logo.title}
               </span>
-            </a>
+            </Link>
             <div className="flex items-center">
               <NavigationMenu>
                 <NavigationMenuList>
@@ -124,6 +122,9 @@ const Navbar1 = async ({
             </div>
           </div>
           <div className="flex gap-2">
+            <Button asChild>
+              <Link href="/dashboard">Dashboard</Link>
+            </Button>
             {data ? (
               <>
                 {" "}
