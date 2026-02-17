@@ -54,6 +54,7 @@ const router = useRouter();
           email: value.email,
           password: value.password,
         });
+        console.log(result)
 
         if (!result.data) {
           toast.error("Invalid Email Or Password", { id: lodingId });
