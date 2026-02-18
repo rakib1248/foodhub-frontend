@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: "https://foodhut-backend-k0z2.onrender.com/api/:path*", //
+        destination: "https://foodhut-backend-k0z2.onrender.com/:path*",
       },
     ];
   },
