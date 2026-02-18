@@ -12,7 +12,7 @@ const nextConfig: NextConfig = {
           { key: "Access-Control-Allow-Credentials", value: "true" },
           {
             key: "Access-Control-Allow-Origin",
-            value: "https://foodhub-frontend-tau.vercel.app",
+            value: "https://foodhut-backend-k0z2.onrender.com",
           },
         ],
       },
