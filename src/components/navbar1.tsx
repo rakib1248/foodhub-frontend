@@ -29,6 +29,7 @@ import Link from "next/link";
 import { authService } from "@/service/auth.service";
 import { logOutServer } from "@/actionServer/auth.action.server";
 import { GetToCard } from "@/actionServer/card.action";
+import { env } from "@/env";
 
 const imageLogo = "../../img/image.png";
 
@@ -64,7 +65,7 @@ interface Navbar1Props {
 
 const Navbar1 = async ({
   logo = {
-    url: "http://localhost:3000/",
+    url: `${env.NEXT_PUBLIC_FRONTEND_URL}`,
     src: `${imageLogo}`,
     alt: "logo",
     title: "FoodHub",
