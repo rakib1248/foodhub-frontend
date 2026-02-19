@@ -6,7 +6,7 @@ export const categoryService = {
     try {
       const cookieStore = await cookies();
 
-      const res = await fetch(`${env.BACKEND_URL}/api/category`, {
+      const res = await fetch(`${env.NEXT_PUBLIC_BACKEND_URL}/api/category`, {
         headers: {
           Cookie: cookieStore.toString(),
         },
@@ -29,7 +29,7 @@ export const categoryService = {
     try {
       const cookieStore = await cookies();
 
-      const res = await fetch(`${env.BACKEND_URL}/api/category`, {
+      const res = await fetch(`${env.NEXT_PUBLIC_BACKEND_URL}/api/category`, {
         method: "POST",
         body: JSON.stringify({ name }),
         headers: {
@@ -55,16 +55,19 @@ export const categoryService = {
     try {
       const cookieStore = await cookies();
 
-      const res = await fetch(`${env.BACKEND_URL}/api/category/${id}`, {
-        method: "PATCH",
-        body: JSON.stringify({ name }),
-        headers: {
-          "Content-Type": "application/json",
-          Cookie: cookieStore.toString(),
-        },
+      const res = await fetch(
+        `${env.NEXT_PUBLIC_BACKEND_URL}/api/category/${id}`,
+        {
+          method: "PATCH",
+          body: JSON.stringify({ name }),
+          headers: {
+            "Content-Type": "application/json",
+            Cookie: cookieStore.toString(),
+          },
 
-        cache: "no-store",
-      });
+          cache: "no-store",
+        },
+      );
       const category = await res.json();
 
       return { user: true, data: category, error: null };
@@ -81,16 +84,19 @@ export const categoryService = {
     try {
       const cookieStore = await cookies();
 
-      const res = await fetch(`${env.BACKEND_URL}/api/category/${id}`, {
-        method: "DELETE",
-      
-        headers: {
-          "Content-Type": "application/json",
-          Cookie: cookieStore.toString(),
-        },
+      const res = await fetch(
+        `${env.NEXT_PUBLIC_BACKEND_URL}/api/category/${id}`,
+        {
+          method: "DELETE",
 
-        cache: "no-store",
-      });
+          headers: {
+            "Content-Type": "application/json",
+            Cookie: cookieStore.toString(),
+          },
+
+          cache: "no-store",
+        },
+      );
       const category = await res.json();
 
       return { user: true, data: category, error: null };

@@ -1,4 +1,4 @@
-import { status } from './../constants/roles';
+
 import { env } from "@/env";
 
 import { cookies } from "next/headers";
@@ -9,7 +9,7 @@ export const userService = {
     try {
       const cookieStore = await cookies();
 
-      const res = await fetch(`${env.BACKEND_URL}/api/auth/me`, {
+      const res = await fetch(`${env.NEXT_PUBLIC_BACKEND_URL}/api/auth/me`, {
         headers: {
           Cookie: cookieStore.toString(),
         },
@@ -33,7 +33,7 @@ export const userService = {
     try {
       const cookieStore = await cookies();
 
-      const res = await fetch(`${env.BACKEND_URL}/api/user`, {
+      const res = await fetch(`${env.NEXT_PUBLIC_BACKEND_URL}/api/user`, {
         headers: {
           Cookie: cookieStore.toString(),
         },
@@ -57,7 +57,7 @@ export const userService = {
     try {
       const cookieStore = await cookies();
 
-      const res = await fetch(`${env.BACKEND_URL}/api/user/${id}`, {
+      const res = await fetch(`${env.NEXT_PUBLIC_BACKEND_URL}/api/user/${id}`, {
         method: "PATCH",
         body: JSON.stringify(data),
         headers: {
@@ -84,16 +84,19 @@ export const userService = {
     try {
       const cookieStore = await cookies();
 
-      const res = await fetch(`${env.BACKEND_URL}/api/user/${data.id}`, {
-        method: "PATCH",
-        body: JSON.stringify({status: data.status}),
-        headers: {
-          "Content-Type": "application/json",
-          Cookie: cookieStore.toString(),
-        },
+      const res = await fetch(
+        `${env.NEXT_PUBLIC_BACKEND_URL}/api/user/${data.id}`,
+        {
+          method: "PATCH",
+          body: JSON.stringify({ status: data.status }),
+          headers: {
+            "Content-Type": "application/json",
+            Cookie: cookieStore.toString(),
+          },
 
-        cache: "no-store",
-      });
+          cache: "no-store",
+        },
+      );
       const result = await res.json();
 
       return { user: true, data: result, error: null };

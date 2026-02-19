@@ -10,16 +10,19 @@ export const reviewService = {
     try {
       const cookieStore = await cookies();
 
-      const res = await fetch(`${env.BACKEND_URL}/api/creat-review`, {
-        method: "POST",
-        body: JSON.stringify(paylode),
-        headers: {
-          "Content-Type": "application/json",
-          Cookie: cookieStore.toString(),
-        },
+      const res = await fetch(
+        `${env.NEXT_PUBLIC_BACKEND_URL}/api/creat-review`,
+        {
+          method: "POST",
+          body: JSON.stringify(paylode),
+          headers: {
+            "Content-Type": "application/json",
+            Cookie: cookieStore.toString(),
+          },
 
-        cache: "no-store",
-      });
+          cache: "no-store",
+        },
+      );
       const review = await res.json();
 
       return { user: true, data: review, error: null };

@@ -22,7 +22,7 @@ export const mealService = {
     try {
       const cookieStore = await cookies();
 
-      const res = await fetch(`${env.BACKEND_URL}/api/meal`, {
+      const res = await fetch(`${env.NEXT_PUBLIC_BACKEND_URL}/api/meal`, {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
@@ -48,7 +48,7 @@ export const mealService = {
     try {
       const cookieStore = await cookies();
 
-      const url = new URL(`${env.BACKEND_URL}/api/meal`);
+      const url = new URL(`${env.NEXT_PUBLIC_BACKEND_URL}/api/meal`);
 
       if (params) {
         Object.entries(params).forEach(([Key, value]) => {
@@ -85,7 +85,7 @@ export const mealService = {
     try {
       const cookieStore = await cookies();
 
-      const res = await fetch(`${env.BACKEND_URL}/api/meal/${id}`, {
+      const res = await fetch(`${env.NEXT_PUBLIC_BACKEND_URL}/api/meal/${id}`, {
         method: "GET",
 
         headers: {
@@ -114,7 +114,7 @@ export const mealService = {
     try {
       const cookieStore = await cookies();
 
-      const res = await fetch(`${env.BACKEND_URL}/api/meal/${id}`, {
+      const res = await fetch(`${env.NEXT_PUBLIC_BACKEND_URL}/api/meal/${id}`, {
         method: "PATCH",
         body: JSON.stringify(data),
 
@@ -141,7 +141,7 @@ export const mealService = {
     try {
       const cookieStore = await cookies();
 
-      const res = await fetch(`${env.BACKEND_URL}/api/meal/${id}`, {
+      const res = await fetch(`${env.NEXT_PUBLIC_BACKEND_URL}/api/meal/${id}`, {
         method: "DELETE",
 
         headers: {

@@ -8,7 +8,7 @@ export const authService = {
     try {
       const cookieStore = await cookies();
 
-      const res = await fetch(`${env.AUTH_URL}/get-session`, {
+      const res = await fetch(`${env.NEXT_PUBLIC_AUTH_URL}/get-session`, {
         headers: {
           Cookie: cookieStore.toString(),
         },

@@ -6,7 +6,7 @@ export const orderService = {
     try {
       const cookieStore = await cookies();
 
-      const res = await fetch(`${env.BACKEND_URL}/api/order`, {
+      const res = await fetch(`${env.NEXT_PUBLIC_BACKEND_URL}/api/order`, {
         method: "GET",
 
         headers: {
@@ -32,7 +32,7 @@ export const orderService = {
     try {
       const cookieStore = await cookies();
 
-      const res = await fetch(`${env.BACKEND_URL}/api/order`, {
+      const res = await fetch(`${env.NEXT_PUBLIC_BACKEND_URL}/api/order`, {
         method: "POST",
         body: JSON.stringify({ address }),
 
@@ -59,17 +59,20 @@ export const orderService = {
     try {
       const cookieStore = await cookies();
 
-      const res = await fetch(`${env.BACKEND_URL}/api/order/status/${id}`, {
-        method: "PATCH",
-        body: JSON.stringify({ status }),
+      const res = await fetch(
+        `${env.NEXT_PUBLIC_BACKEND_URL}/api/order/status/${id}`,
+        {
+          method: "PATCH",
+          body: JSON.stringify({ status }),
 
-        headers: {
-          "Content-Type": "application/json",
-          Cookie: cookieStore.toString(),
+          headers: {
+            "Content-Type": "application/json",
+            Cookie: cookieStore.toString(),
+          },
+
+          cache: "no-store",
         },
-
-        cache: "no-store",
-      });
+      );
       const order = await res.json();
 
       return { user: true, data: order, error: null };
@@ -86,17 +89,20 @@ export const orderService = {
     try {
       const cookieStore = await cookies();
 
-      const res = await fetch(`${env.BACKEND_URL}/api/order/${id}`, {
-        method: "PATCH",
-        body: JSON.stringify({ status }),
+      const res = await fetch(
+        `${env.NEXT_PUBLIC_BACKEND_URL}/api/order/${id}`,
+        {
+          method: "PATCH",
+          body: JSON.stringify({ status }),
 
-        headers: {
-          "Content-Type": "application/json",
-          Cookie: cookieStore.toString(),
+          headers: {
+            "Content-Type": "application/json",
+            Cookie: cookieStore.toString(),
+          },
+
+          cache: "no-store",
         },
-
-        cache: "no-store",
-      });
+      );
       const order = await res.json();
 
       return { user: true, data: order, error: null };

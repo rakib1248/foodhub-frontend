@@ -7,7 +7,7 @@ export const cardService = {
     try {
       const cookieStore = await cookies();
 
-      const res = await fetch(`${env.BACKEND_URL}/api/card`, {
+      const res = await fetch(`${env.NEXT_PUBLIC_AUTH_URL}/api/card`, {
         method: "GET",
 
         headers: {
@@ -33,7 +33,7 @@ export const cardService = {
     try {
       const cookieStore = await cookies();
 
-      const res = await fetch(`${env.BACKEND_URL}/api/card`, {
+      const res = await fetch(`${env.NEXT_PUBLIC_BACKEND_URL}/api/card`, {
         method: "POST",
         body: JSON.stringify({
           mealId: data.mealId,
@@ -63,7 +63,7 @@ export const cardService = {
     try {
       const cookieStore = await cookies();
 
-      const res = await fetch(`${env.BACKEND_URL}/api/card/${id}`, {
+      const res = await fetch(`${env.NEXT_PUBLIC_BACKEND_URL}/api/card/${id}`, {
         method: "PATCH",
         body: JSON.stringify(data),
         headers: {
@@ -90,7 +90,7 @@ export const cardService = {
     try {
       const cookieStore = await cookies();
 
-      const res = await fetch(`${env.BACKEND_URL}/api/card/${id}`, {
+      const res = await fetch(`${env.NEXT_PUBLIC_BACKEND_URL}/api/card/${id}`, {
         method: "DELETE",
 
         headers: {

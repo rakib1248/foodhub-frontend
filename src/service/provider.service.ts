@@ -8,7 +8,7 @@ export const providerService = {
     try {
       const cookieStore = await cookies();
 
-      const res = await fetch(`${env.BACKEND_URL}/api/provider`, {
+      const res = await fetch(`${env.NEXT_PUBLIC_BACKEND_URL}/api/provider`, {
         headers: {
           Cookie: cookieStore.toString(),
         },
@@ -32,13 +32,16 @@ export const providerService = {
     try {
       const cookieStore = await cookies();
 
-      const res = await fetch(`${env.BACKEND_URL}/api/provider/${id}`, {
-        headers: {
-          Cookie: cookieStore.toString(),
-        },
+      const res = await fetch(
+        `${env.NEXT_PUBLIC_BACKEND_URL}/api/provider/${id}`,
+        {
+          headers: {
+            Cookie: cookieStore.toString(),
+          },
 
-        cache: "no-store",
-      });
+          cache: "no-store",
+        },
+      );
       const provider = await res.json();
 
       return { user: true, data: provider, error: null };
@@ -55,7 +58,7 @@ export const providerService = {
     try {
       const cookieStore = await cookies();
 
-      const res = await fetch(`${env.BACKEND_URL}/api/provider`, {
+      const res = await fetch(`${env.NEXT_PUBLIC_BACKEND_URL}/api/provider`, {
         method: "POST",
         body: JSON.stringify(data),
         headers: {

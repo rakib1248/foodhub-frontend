@@ -39,6 +39,8 @@ export async function proxy(request: NextRequest) {
       pathname.startsWith(path),
     );
 
+  
+
   const { data } = await authService.getSession();
   const isAuthenticated = !!data;
   const userRole: string | undefined = data?.user?.role;
