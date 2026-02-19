@@ -1,20 +1,16 @@
 // import { Roles } from '@/constants/roles';
 import { NextRequest, NextResponse } from "next/server";
 
-import { Roles } from "./constants/roles";
+import { Roles } from "@/constants/roles";
 
-import { authService } from "./service/auth.service";
+import { authService } from "@/service/auth.service";
 
 const providerRestrictedRoutes = [
   "/dashboard/profile/provider",
   "/dashboard/mealcreate",
   "/dashboard/meal",
-
 ];
-const adminRestrictedRoutes = [
-  "/dashboard/profile/admin",
-
-];
+const adminRestrictedRoutes = ["/dashboard/profile/admin"];
 const userRestrictedRoutes = ["/card", "/chackout"];
 
 const providerAdminSharedRoutes = [
@@ -35,11 +31,9 @@ export async function proxy(request: NextRequest) {
     pathname.startsWith(path),
   );
 
-    const isSharedPath = providerAdminSharedRoutes.some((path) =>
-      pathname.startsWith(path),
-    );
-
-  
+  const isSharedPath = providerAdminSharedRoutes.some((path) =>
+    pathname.startsWith(path),
+  );
 
   const { data } = await authService.getSession();
   const isAuthenticated = !!data;

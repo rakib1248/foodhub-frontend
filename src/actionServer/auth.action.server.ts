@@ -6,8 +6,8 @@ import { redirect } from "next/navigation";
 
 export const logOutServer = async () => {
   try {
-    await authService.logOut();
-
+    const result = await authService.logOut();
+    console.log(result);
   } catch (error) {
     console.error("Logout failed", error);
   }

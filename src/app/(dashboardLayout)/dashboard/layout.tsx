@@ -13,7 +13,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { Roles } from "@/constants/roles";
+
 import { authService } from "@/service/auth.service";
 export const dynamic = "force-dynamic";
 export default async function LayoutPage({
@@ -27,7 +27,7 @@ export default async function LayoutPage({
   customer: React.ReactNode;
   provider: React.ReactNode;
 }) {
-  const data = await authService.getSession();
+  const data  = await authService.getSession();
   const role = data?.data.user?.role;
 
   return (
