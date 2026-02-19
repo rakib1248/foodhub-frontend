@@ -7,7 +7,7 @@ export const cardService = {
     try {
       const cookieStore = await cookies();
 
-      const res = await fetch(`${env.NEXT_PUBLIC_AUTH_URL}/api/card`, {
+      const res = await fetch(`${env.NEXT_PUBLIC_BACKEND_URL}/api/card`, {
         method: "GET",
 
         headers: {
