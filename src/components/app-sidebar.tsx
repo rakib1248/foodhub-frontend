@@ -18,6 +18,7 @@ import { authService } from "@/service/auth.service";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { logOutServer } from "@/actionServer/auth.action.server";
+import Logout from "./Logout";
 
 // This is sample data.
 export const sidebarData: Record<string, any[]> = {
@@ -113,14 +114,15 @@ export async function AppSidebar({
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
-      <form action={logOutServer}>
+      {/* <form action={logOutServer}>
         <Button
           type="submit"
           variant={"outline"}
           className=" w-full cursor-pointer">
           Log Out
         </Button>
-      </form>
+      </form> */}
+      <Logout />
       <SidebarRail />
     </Sidebar>
   );

@@ -1,13 +1,10 @@
 // "use client";
 
-import {  Menu, ShoppingCart} from "lucide-react";
+import { Menu, ShoppingCart } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-import {
-  Accordion,
-
-} from "@/components/ui/accordion";
+import { Accordion } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
@@ -30,6 +27,8 @@ import { authService } from "@/service/auth.service";
 import { logOutServer } from "@/actionServer/auth.action.server";
 import { GetToCard } from "@/actionServer/card.action";
 import { env } from "@/env";
+import { authClient } from "@/lib/auth-clint";
+import { useRouter } from "next/navigation";
 
 const imageLogo = "../../img/image.png";
 
@@ -38,7 +37,6 @@ interface MenuItem {
   url: string;
   description?: string;
   icon?: React.ReactNode;
-
 }
 
 interface Navbar1Props {
@@ -97,6 +95,17 @@ const Navbar1 = async ({
 
   const items = response?.data?.items || [];
 
+  const handleLogout = async () => {
+    const router = useRouter();
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          router.push("/login");
+          router.refresh();
+        },
+      },
+    });
+  };
 
   return (
     <section className={cn("py-4", className)}>
@@ -129,7 +138,6 @@ const Navbar1 = async ({
             </Button>
             {data ? (
               <>
-                {" "}
                 <Button asChild className=" cursor-pointer relative p-5">
                   <Link href="/card">
                     <span className="absolute bottom-6 right-1 flex justify-center items-center rounded-full w-4 h-4 z-10 bg-blue-500">
@@ -138,15 +146,14 @@ const Navbar1 = async ({
                     <ShoppingCart />
                   </Link>
                 </Button>
-                <form action={logOutServer}>
-                  <Button
-                    // onClick={handleLogout}
-                     type="submit"
-                    variant={"outline"}
-                    className=" cursor-pointer">
-                    Log Out
-                  </Button>
-                </form>
+                {/* <form action={logOutServer}> */}
+                <Button
+                  onClick={handleLogout}
+                  variant={"outline"}
+                  className=" cursor-pointer">
+                  Log Out
+                </Button>
+                {/* </form> */}
               </>
             ) : (
               <>
@@ -211,14 +218,14 @@ const Navbar1 = async ({
                             <ShoppingCart />
                           </Link>
                         </Button>
-                        <form action={logOutServer}>
-                          <Button
-                            type="submit"
-                            variant={"outline"}
-                            className=" cursor-pointer">
-                            Log Out
-                          </Button>
-                        </form>
+                        {/* <form action={logOutServer}> */}
+                        <Button
+                          onClick={handleLogout}
+                          variant={"outline"}
+                          className=" cursor-pointer">
+                          Log Out
+                        </Button>
+                        {/* </form> */}
                       </>
                     ) : (
                       <>
