@@ -35,6 +35,7 @@ import { Input } from "./ui/input";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-clint";
 import { uploadImage } from "@/lib/claudinary";
+import { useRouter } from "next/navigation";
 
 const Roles = [
   { label: "Customer", value: userRole.user },
@@ -58,6 +59,7 @@ const formSchema = z.object({
 });
 
 export default function RegistationForm() {
+  const router = useRouter()
   const form = useForm({
     defaultValues: {
       name: "",
@@ -95,6 +97,7 @@ export default function RegistationForm() {
           return;
         }
         toast.success("Account Create Successfull", { id: lodingId });
+        router.push("/login");
       } catch (erro) {
         toast.error("someting went Wron Please Try Again", {
           id: lodingId,

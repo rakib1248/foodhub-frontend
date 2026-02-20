@@ -98,14 +98,6 @@ const Navbar1 = async ({
   const items = response?.data?.items || [];
 
 
-  // const handleLogout = async () => {
-  //    try {
-  //      const result = await authService.logOut();
-  //      console.log(result);
-  //    } catch (error) {
-  //      console.error("Logout failed", error);
-  //    }
-  // }
   return (
     <section className={cn("py-4", className)}>
       <div className="container mx-auto">

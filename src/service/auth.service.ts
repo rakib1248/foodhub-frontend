@@ -1,6 +1,7 @@
 import { env } from "@/env";
 
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export const authService = {
   getSession: async () => {
@@ -31,7 +32,7 @@ export const authService = {
     try {
       const cookieStore = await cookies();
 
-      const res = await fetch(`${env.NEXT_PUBLIC_AUTH_URL}/sign-out`, {
+      await fetch(`${env.NEXT_PUBLIC_AUTH_URL}/sign-out`, {
         method: "POST",
         headers: {
           Origin: env.NEXT_PUBLIC_FRONTEND_URL,
@@ -39,8 +40,9 @@ export const authService = {
         },
         cache: "no-store",
       });
-
-      console.log(await res.json());
+      cookieStore.delete("__Secure-better-auth.session_token");
+      cookieStore.delete("__Secure-better-auth.session_data");
+      redirect("/login");
     } catch (error) {
       return error;
     }

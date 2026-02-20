@@ -75,25 +75,7 @@ export default function OrderManagement({
     }
   };
 
-  // const submitReview = async () => {
-  //   if (rating === 0) return toast.error("Please select a rating");
 
-  //   selectedOrder.items.map( async (i: any)  => {
-  //     const payload = {
-  //       rating,
-  //       comment,
-  //       mealId: i.mealId as string,
-  //     };
-  //     const { data } = await createReview(payload)
-  //     console.log(data.data)
-  //   });
-
-
-  //   toast.success("Thank you for your review!");
-  //   setIsReviewModalOpen(false);
-  //   setRating(0);
-  //   setComment("");
-  // };
 
   const submitReview = async () => {
     if (rating === 0) return toast.error("Please select a rating");
