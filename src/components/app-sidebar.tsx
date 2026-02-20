@@ -27,7 +27,7 @@ export const sidebarData: Record<string, any[]> = {
       title: "Admin Panel",
       items: [
         { title: "User Management", url: "/dashboard/users" },
-        { title: "System Settings", url: "/dashboard/settings" },
+
         { title: "Order", url: "/dashboard/order" },
 
         { title: "Category", url: "/dashboard/category" },
